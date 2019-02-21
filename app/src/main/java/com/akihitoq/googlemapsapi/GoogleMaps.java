@@ -1,7 +1,9 @@
 package com.akihitoq.googlemapsapi;
 
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
@@ -38,9 +41,22 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        final LatLng nu = new LatLng(16.7473481, 100.1983433);
+        mMap.addMarker(new MarkerOptions().position(nu).title("Naresuan University"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(nu));
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mMap.addMarker(new MarkerOptions().position(latLng).title(""+latLng));
+                Toast toast = Toast.makeText(getApplicationContext(),String.valueOf(latLng),Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+
     }
 }
